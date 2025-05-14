@@ -5,6 +5,13 @@ import os
 
 app = Flask(__name__)
 
+
+if os.getenv("DISABLE_APP", "false") == "true":
+    print("App is disabled")
+else:
+    # Chạy ứng dụng như bình thường
+    app.run()
+# Disable app if DISABLE_APP is set to true
 # Database connection
 def get_db():
     conn = sqlite3.connect('shop.db')
@@ -413,7 +420,13 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     return response
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=8000, debug=True)
-    port = int(os.getenv('PORT', 8000))
-    app.run(host='0.0.0.0', port=port)
+    #-------------------------------------------------
+    # Kiểm tra biến môi trường để tắt ứng dụng nếu cần
+if os.getenv("DISABLE_APP", "false") == "true":
+    print("App is disabled")
+else:
+    # Chạy ứng dụng Flask
+    if __name__ == "__main__":
+        app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
