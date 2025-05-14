@@ -6,12 +6,6 @@ import os
 app = Flask(__name__)
 
 
-if os.getenv("DISABLE_APP", "false") == "true":
-    print("App is disabled")
-else:
-    # Chạy ứng dụng như bình thường
-    app.run()
-# Disable app if DISABLE_APP is set to true
 # Database connection
 def get_db():
     conn = sqlite3.connect('shop.db')
